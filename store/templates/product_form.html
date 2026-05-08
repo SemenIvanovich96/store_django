@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} товар{% endblock %}
+
+{% block content %}
+    <h1>{% if form.instance.pk %}Редактировать{% else %}Добавить{% endif %} товар</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        {% if form.non_field_errors %}
+            <div class="errors">{{ form.non_field_errors }}</div>
+        {% endif %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="errors">{{ field.label }}: {{ error }}</div>
+            {% endfor %}
+        {% endfor %}
+        <button type="submit">Сохранить</button>
+        <a href="{% url 'product_list' %}">Отмена</a>
+    </form>
+{% endblock %}
