@@ -2,9 +2,41 @@
 <html>
 <head>
     <title>{% block title %}Товары{% endblock %}</title>
-    <style> .errors { color: red; } </style>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; background: #f5f5f5; }
+        .navbar {
+            background: linear-gradient(90deg, #007bff, #0056b3);
+            padding: 15px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .nav-container {
+            max-width: 1200px; margin: 0 auto; display: flex;
+            justify-content: space-between; align-items: center; padding: 0 20px;
+        }
+        .logo { color: white; font-size: 24px; font-weight: bold; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a {
+            color: white; text-decoration: none; padding: 10px 20px;
+            border-radius: 25px; transition: all 0.3s; font-weight: 500;
+        }
+        .nav-links a:hover { background: rgba(255,255,255,0.2); transform: translateY(-2px); }
+        #content { max-width: 1000px; margin: 30px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+        .errors { color: #dc3545; background: #f8d7da; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    </style>
 </head>
 <body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo"> Магазин</div>
+            <div class="nav-links">
+                <a href="{% url 'index' %}"> Главная</a>
+                <a href="{% url 'product_list' %}"> Товары</a>
+                <a href="{% url 'product_create' %}"> Добавить</a>
+                <a href="/admin/store/product/">️ Админка</a>
+            </div>
+        </div>
+    </nav>
+
     <div id="content">
         {% block content %}{% endblock %}
     </div>

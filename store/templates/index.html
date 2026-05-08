@@ -3,49 +3,37 @@
 {% block title %}Главная{% endblock %}
 
 {% block content %}
-    <div style="max-width: 800px; margin: 50px auto;">
-        <h1 style="text-align: center;"> Магазин товаров</h1>
-
-
-        <div style="display: flex; gap: 15px; margin-bottom: 40px; flex-wrap: wrap;">
-            <a href="{% url 'product_list' %}" class="quick-btn"> Все товары</a>
-            <a href="{% url 'product_create' %}" class="quick-btn"> Добавить</a>
-            <a href="/admin/store/product/" class="quick-btn"> Админка</a>
-        </div>
-
-
-        <div style="background: #f8f9fa; padding: 20px; border-radius: 10px;">
-            <h2> Редактировать товары ({{ products.count }})</h2>
-            {% if products %}
-                {% for product in products %}
-                <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px; margin: 10px 0; background: white; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-                    <div>
-                        <strong>{{ product.name }}</strong>
-                        <span style="color: #666; margin-left: 10px;">{{ product.price }} руб.</span>
-                        <br><small>{{ product.category.name }}</small>
-                    </div>
-                    <a href="{% url 'product_update' product.pk %}"
-                       style="background: #17a2b8; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
-                        Редактировать
-                    </a>
-                </div>
-                {% endfor %}
-            {% else %}
-                <p style="text-align: center; color: #666; font-style: italic;">
-                    Нет опубликованных товаров. <a href="{% url 'product_create' %}">Создайте первый!</a>
-                </p>
-            {% endif %}
-        </div>
+    <div style="text-align: center; margin: 40px 0;">
+        <h1> Добро пожаловать!</h1>
+        <p>Управляйте товарами через меню сверху</p>
     </div>
 
-    <style>
-        .quick-btn {
-            padding: 12px 24px; color: white; text-decoration: none;
-            border-radius: 25px; font-weight: bold; transition: all 0.3s;
-        }
-        .quick-btn:hover { transform: translateY(-2px); }
-        .quick-btn:nth-child(1) { background: #007bff; }
-        .quick-btn:nth-child(2) { background: #28a745; }
-        .quick-btn:nth-child(3) { background: #6f42c1; }
-    </style>
+    <!-- Только список товаров для редактирования -->
+    <div style="max-width: 1000px; margin: 0 auto;">
+        <h2 style="margin-bottom: 20px;"> Быстрое редактирование товаров ({{ products.count }})</h2>
+
+        {% if products %}
+            {% for product in products %}
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; margin: 15px 0; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                <div style="flex: 1;">
+                    <h3 style="margin: 0 0 5px 0;">{{ product.name }}</h3>
+                    <div style="color: #666; font-size: 16px;">
+                         {{ product.price }} руб. •
+                         {{ product.category.name }} •
+                         {{ product.created_at|date:"d.m.Y" }}
+                    </div>
+                </div>
+                <a href="{% url 'product_update' product.pk %}"
+                   style="background: linear-gradient(45deg, #17a2b8, #0d6efd); color: white; padding: 12px 24px; text-decoration: none; border-radius: 25px; font-weight: bold; box-shadow: 0 4px 15px rgba(23,162,184,0.4); transition: all 0.3s;">
+                     Редактировать
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="text-align: center; padding: 60px; background: #f8f9fa; border-radius: 12px; color: #666;">
+                <h3> Нет товаров</h3>
+                <p>Используйте меню сверху → "Добавить товар"</p>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
