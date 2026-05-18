@@ -5,15 +5,23 @@
 {% block content %}
     <h1>Список товаров</h1>
     <a href="{% url 'product_create' %}">Добавить товар</a>
+
     {% for product in object_list %}
         {% if product.is_published %}
-        <div style="border: 1px solid #ccc; margin: 10px; padding: 10px;">
-            <h2><a href="{% url 'product_detail' product.pk %}">{{ product.name }}</a></h2>
-            <p>{{ product.description }}</p>
-            <p>Цена: {{ product.price }} руб.</p>
-            <p>Категория: {{ product.category.name }}</p>
-            <small>Создан: {{ product.created_at|date:"d.m.Y H:i" }}</small>
-        </div>
+            <div style="border: 1px solid #ccc; margin: 10px; padding: 10px; display: flex; flex-direction: column; gap: 8px;">
+                <h2><a href="{% url 'product_detail' product.pk %}">{{ product.name }}</a></h2>
+                <p>{{ product.description }}</p>
+                <p>Цена: {{ product.price }} руб.</p>
+                <p>Категория: {{ product.category.name }}</p>
+                <small>Создан: {{ product.created_at|date:"d.m.Y H:i" }}</small>
+
+
+                <a href="{% url 'product_delete' pk=product.pk %}"
+                   style="background: #dc3545; color: white; padding: 6px 12px;
+                          border-radius: 16px; font-size: 12px; text-decoration: none; width: max-content;">
+                    Удалить
+                </a>
+            </div>
         {% endif %}
     {% empty %}
         <p>Опубликованных товаров нет.</p>

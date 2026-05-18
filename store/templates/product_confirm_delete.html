@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Удалить товар{% endblock %}
+
+{% block content %}
+
+    <h2>Удалить товар "{{ object }}"?</h2>
+    <p style="color: #6c757d; margin: 10px 0;">
+        Вы уверены, что хотите удалить этот товар?
+    </p>
+
+    <form method="post" style="margin: 20px 0;">
+        {% csrf_token %}
+        <button type="submit"
+                style="background: linear-gradient(90deg, #dc3545, #c82333);
+                   color: white; border: none; padding: 10px 20px;
+                   border-radius: 25px; cursor: pointer; font-weight: 500;
+                   margin-right: 10px; box-shadow: 0 2px 8px rgba(220,53,69,0.3);">
+            Да, удалить
+        </button>
+        <a href="{% url 'product_list' %}"
+           style="color: #007bff; text-decoration: none; padding: 10px 20px;
+              border: 1px solid #007bff; border-radius: 25px; font-weight: 500;">
+            Отмена
+        </a>
+    </form>
+
+{% endblock %}
