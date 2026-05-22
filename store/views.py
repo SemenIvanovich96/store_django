@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.urls import reverse_lazy
 from .models import Product
 from .forms import ProductForm
+from .tasks import log_product_created
 
 
 class IndexView(ListView):
@@ -27,6 +28,11 @@ class ProductCreateView(CreateView):
     form_class = ProductForm
     template_name = 'product_form.html'
     success_url = reverse_lazy('product_list')
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        log_product_created.delay(self.object.name)
+        return response
 
 
 class ProductUpdateView(UpdateView):
